@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Category>
+<style>
+
+
+    .menu-toggle {
+        cursor: pointer;
+    }
+
+    .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        margin: 3px 0;
+        transition: 0.4s;
+    }
+
+    .menu-open .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-open .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-open .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    #menu-list {
+        display: none;
+    }
+
+    .menu-open #menu-list {
+        display: block;
+    }
+
+    .list-group-item {
+        background: linear-gradient(45deg, #575757, #3B3B3B);
+        border: none;
+        margin: 5px 0;
+        padding: 10px 15px;
+    }
+
+        .list-group-item a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+    .menu-open .list-group-item:hover {
+        background: linear-gradient(45deg, #414141, #2E2E2E);
+    }
+
+</style>
+<div class="menu-toggle" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+<ul class="list-group" id="menu-list">
+
+    <li class="list-group-item">
+        <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="Index">All Products</a>
+    </li>
+
+    @foreach (var item in Model)
+    {
+    <li class="list-group-item">
+        <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="ProductsByCategory" asp-route-categorySlug="@item.Slug">@item.Name</a>
+    </li>
+    }
+
+</ul>
+
+<script>
+    let menuOpen = false;
+
+    function toggleMenu() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menuList = document.querySelector('#menu-list');
+
+        if (!menuOpen) {
+            menuToggle.classList.add('menu-open');
+            menuList.style.display = 'block';
+        } else {
+            menuToggle.classList.remove('menu-open');
+            menuList.style.display = 'none';
+        }
+
+        menuOpen = !menuOpen;
+    }
+</script>

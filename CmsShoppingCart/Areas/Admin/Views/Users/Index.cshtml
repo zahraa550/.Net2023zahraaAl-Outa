@@ -1,0 +1,87 @@
+﻿@model IEnumerable<AppUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    
+
+    .table {
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: 2px solid #dc3545;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border: 2px solid #c82333;
+        }
+</style>
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    <a class="confirmDeletion btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+    ViewData["Title"] = "Roles";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .confirmDeletion {
+        color: #dc3545;
+    }
+
+    .table {
+        background-color: #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td a {
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+</style>
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Role</th>
+            <th>Users</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td user-role="@role.Id"></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@role.Id">Edit</a> |
+                    <a class="confirmDeletion" asp-action="Delete" asp-route-id="@role.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

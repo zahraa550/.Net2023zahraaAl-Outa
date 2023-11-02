@@ -1,0 +1,108 @@
+﻿@model RoleEdit
+
+@{
+    ViewData["Title"] = "Edit Roles";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    
+
+    .badge-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    table tr td {
+        text-align: left;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>
+<h1>Edit Roles</h1>
+
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+
+            <div class="row">
+                <div class="col-6">
+                    <h2>Add users to <span class="badge badge-primary">@Model.Role.Name</span> role</h2>
+                    <table class="table table-bordered">
+                        @if (Model.NonMembers.Count() == 0)
+                        {
+                            <tr><td>All users are members.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (AppUser user in Model.NonMembers)
+                            {
+                                <tr>
+                                    <td>@user.UserName</td>
+                                    <td>
+                                        <input type="checkbox" value="@user.Id" name="AddIds" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+                <div class="col-6">
+                    <h2>Remove users from <span class="badge badge-primary">@Model.Role.Name</span> role</h2>
+                    <table class="table table-bordered">
+                        @if (Model.Members.Count() == 0)
+                        {
+                            <tr><td>No users are members.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (AppUser user in Model.Members)
+                            {
+                                <tr>
+                                    <td>@user.UserName</td>
+                                    <td>
+                                        <input type="checkbox" value="@user.Id" name="DeleteIds" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

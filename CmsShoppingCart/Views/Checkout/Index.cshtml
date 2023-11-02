@@ -1,0 +1,80 @@
+﻿@using System.Security.Claims;
+@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mt-4">Checkout</h2>
+            <form asp-controller="Checkout" asp-action="PlaceOrder" method="post">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Billing Information</h4>
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <input type="text" class="form-control" id="Name" placeholder="Full Name" asp-for="Order.Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="Address">Address</label>
+                            <input type="text" class="form-control" id="Address" placeholder="Address" asp-for="Order.Adress">
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Order Description</label>
+                            <textarea class="form-control" id="Description" asp-for="Order.Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method:</label>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="PayOnDelivery" disabled checked value="delivery" asp-for="Order.PaymentMethod">
+                                <label class="custom-control-label" for="PayOnDelivery">Pay On Delivery</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               @*  <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Order Summary</h4>
+                        @if (Model.CartViewModel.CartItems.Count > 0)
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CartViewModel.CartItems)
+                                    {
+                                        <tr>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Price.ToString("C2")</td>
+                                            <td>@(item.Quantity * item.Price)</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="3" class="text-right">Grand Total:</td>
+                                        <td>@Model.CartViewModel.GrandTotal.ToString("C2")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Your cart is empty.</p>
+                        }
+                    </div>
+                </div> *@
+
+                <button type="submit" class="btn btn-success mt-4">Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>

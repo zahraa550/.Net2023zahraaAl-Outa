@@ -1,0 +1,130 @@
+﻿@* @model IEnumerable<CmsShoppingCart.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+@model List<Order>
+
+@if (Model.Count() > 0)
+{
+    <div class="row  d-flex justify-content-center">
+        <div class="col-8">
+
+
+            @foreach (var order in Model)
+            {
+                <div class="col-lg-12 col-sm-12 background-primary border mb-3 border-0 text-white">
+
+
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            Order Date: @order.OrderDate
+                            <span class="float-end text-success fw-bold">
+                                Total: @order.TotalAmount
+                            </span>
+                        </h4>
+                        <p class="card-text">
+                            <h5 class="fw-bold">Products</h5>
+                            <ul>
+                                @foreach (var item in @order.CartItems)
+                                {
+                                    <li class="text-white">@item.ProductName</li>
+                                }
+                            </ul>
+                        </p>
+
+                        <a class="btn bg-secondary bg-opacity-25 border-white text-white" asp-controller="Order" asp-action="Summary" asp-route-id="@order.Id">View</a>
+                        <a class="btn bg-secondary bg-opacity-25 border-white text-white" asp-controller="Order" asp-action="Delete" asp-route-id="@order.Id">Delete</a>
+
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="text-white fw-bold">No Orders</h1>
+}

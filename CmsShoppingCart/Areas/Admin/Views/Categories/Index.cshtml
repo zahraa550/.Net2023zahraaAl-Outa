@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+
+    .table {
+        background-color: #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px;
+    }
+
+    a.btn {
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: 2px solid #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: 2px solid #dc3545;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border: 2px solid #c82333;
+        }
+
+    .sorting tr.ui-state-highlight {
+        background-color: #f0f0f0;
+    }
+</style>
+<h1>Categories</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table sorting" id="categories">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Slug
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id">
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Slug
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="confirmDeletion" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $("table#categories tbody").sortable({
+            items: "tr:not(.home)",
+            placeholder: "ui-state-highlight",
+            update: function () {
+                let ids = $("table#categories tbody").sortable("serialize");
+                let url = "/admin/categories/reorder";
+
+                $.post(url, ids, function () { });
+            }
+        })
+    </script>
+}
